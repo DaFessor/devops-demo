@@ -9,38 +9,24 @@ on:
 
 jobs:
 
-  chk_devcontainer:
-    runs-on: ubuntu-latest
+  call_chk_devcontainer:
+    name: Checking for valid dev container image
     permissions:
       contents: read
       packages: write
-    outputs:
-      image_name: ${{ steps.lower_case_names.outputs.image_name_lowercase }}
-
-    steps:
-      - name: Downcase image and repo names
-        id: lower_case_names
-        run: |
-          echo "image_name_lowercase=ghcr.io/${GITHUB_REPOSITORY,,}/devops-demo-img:latest" >>${GITHUB_OUTPUT}
-          echo "repo_name_lowercase=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check dev container
-        run: .github/scripts/check_dev_container.sh ${{env.repo_name_lowercase}} ${{steps.lower_case_names.outputs.image_name_lowercase}} ${{secrets.GITHUB_TOKEN}}
+    uses: ./.github/workflows/chk_devcontainer_img.yml
+    with:
+      image-id: devops-demo-img:latest
+    secrets:
+      secr-token: ${{ secrets.GITHUB_TOKEN }}
 
   run_tests:
     runs-on: ubuntu-latest
-    needs: chk_devcontainer
+    needs: call_chk_devcontainer
     permissions:
       contents: write
     env:
-      IMAGE_NAME: ${{ needs.chk_devcontainer.outputs.image_name }}
+      IMAGE_NAME: ${{ needs.call_chk_devcontainer.outputs.image-path }}
 
     steps:
       - name: Checkout repo
@@ -48,13 +34,13 @@ jobs:
       - name: Pull dev container
         run: docker pull ${IMAGE_NAME}
       - name: Run tests inside container
-        run: docker run --rm --mount type=bind,src=${{ github.workspace }},dst=/workspace ${IMAGE_NAME} sh -c "cd /workspace;mvn test"
+        run: docker run --rm --mount type=bind,src=${{ github.workspace }},dst=/workspace ${IMAGE_NAME} sh -c "cd /workspace;mvn build && mvn test"
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
           name: test-coverage-report
           path: target/site/jacoco/
-          retention-days: 21
+          retention-days: 7
 
   update_coverage_report:
     needs: run_tests
