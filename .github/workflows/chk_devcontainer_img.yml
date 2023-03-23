@@ -37,7 +37,7 @@ jobs:
         id: lower_case_names
         run: |
           echo "image_name_lowercase=ghcr.io/${GITHUB_REPOSITORY,,}/${{inputs.image-id}}" >>${GITHUB_OUTPUT}
-          echo "repo_name_lowercase=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+          echo "repo_name_lowercase=${GITHUB_REPOSITORY,,}" >>${GITHUB_OUTPUT}
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
