@@ -16,7 +16,7 @@ on:
     outputs:
       image-path:
         description: The image name in all lower-case
-        value: ${{jobs.chk_devcontainer.image_name_lc}}
+        value: ${{jobs.chk_devcontainer.outputs.image_name_lc}}
 
 # Allow one concurrent deployment
 concurrency:
