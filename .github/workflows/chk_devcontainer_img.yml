@@ -49,4 +49,4 @@ jobs:
           username: ${{github.actor }}
           password: ${{secrets.secr-token}}
       - name: Check dev container
-        run: .github/scripts/check_dev_container.sh ${{env.repo_name_lowercase}} ${{steps.lower_case_names.outputs.image_name_lowercase}} ${{secrets.secr_toke}}  
+        run: .github/scripts/check_dev_container.sh ${{env.repo_name_lowercase}} ${{steps.lower_case_names.outputs.image_name_lowercase}} ${{secrets.secr-secr-token}}  
