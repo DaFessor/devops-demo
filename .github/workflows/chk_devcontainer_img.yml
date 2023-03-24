@@ -33,6 +33,12 @@ jobs:
       image_name_lc: ${{steps.lower_case_names.outputs.image_name_lowercase}}
 
     steps:
+      - name: List some interesting settings
+        run: |
+          echo "github.actor: " ${{ github.actor }}
+          echo "github.repository: " ${{ github.repository }}
+          echo "github.workspace :" ${{ github.workspace }}
+          echo "github.repository_owner :" ${{ github.repository_owner }}
       - name: Downcase image and repo names
         id: lower_case_names
         run: |
