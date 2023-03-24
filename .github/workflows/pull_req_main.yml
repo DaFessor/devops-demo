@@ -37,8 +37,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
       - name: Pull dev container
         run: docker pull ${IMAGE_NAME}
       - name: Run tests inside container
-        run: docker run --rm --mount type=bind,src=${{ github.workspace }},dst=/workspace ${IMAGE_NAME} sh -c "cd /workspace;mvn compile && mvn test"
+        run: |
+          docker run --rm \
+            --mount type=bind,src=${{ github.workspace }},dst=/workspaces \
+            --mount type=bind,src=$HOME,dst=/root \
+            ${IMAGE_NAME} sh -c "cd /workspaces;mvn compile && mvn test"
