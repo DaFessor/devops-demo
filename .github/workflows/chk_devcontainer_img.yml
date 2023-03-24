@@ -39,7 +39,7 @@ jobs:
           echo "github.repository: " ${{ github.repository }}
           echo "github.workspace :" ${{ github.workspace }}
           echo "github.repository_owner :" ${{ github.repository_owner }}
-          echo "cwd : pwd
+          sh -c "echo 'pwd': $(pwd)"
       - name: Downcase image and repo names
         id: lower_case_names
         run: |
