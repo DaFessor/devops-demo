@@ -1,18 +1,17 @@
 package via.doc1.devopsdemo.controller;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import via.doc1.devopsdemo.model.Task;
 import via.doc1.devopsdemo.service.TeamService;
 
@@ -20,7 +19,6 @@ import via.doc1.devopsdemo.service.TeamService;
  * @author jook
  * @version 1.0
  */
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(value = TeamController.class)
 public class TeamControllerTest {
 
@@ -28,7 +26,7 @@ public class TeamControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private TeamService teamService;
 
     Task mockTask = new Task("Task1", "IoT Pipeline", "Create CD pipeline for IoT component");
