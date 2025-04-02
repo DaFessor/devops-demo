@@ -8,7 +8,10 @@
 			"extensions": [
                 "oracle.oracle-java",
                 "vscjava.vscode-java-pack",
-                "vmware.vscode-boot-dev-pack"
+                "vmware.vscode-boot-dev-pack",
+				"mhutchie.git-graph",
+				"donjayamanne.githistory",
+				"peakchen90.open-html-in-browser"
 			]
 		}
 	}
