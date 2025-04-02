@@ -3,12 +3,12 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 	},
-    "customizations": {
+	"customizations": {
 		"vscode": {
 			"extensions": [
-                "oracle.oracle-java",
-                "vscjava.vscode-java-pack",
-                "vmware.vscode-boot-dev-pack",
+				"oracle.oracle-java",
+				"vscjava.vscode-java-pack",
+				"vmware.vscode-boot-dev-pack",
 				"mhutchie.git-graph",
 				"donjayamanne.githistory",
 				"peakchen90.open-html-in-browser"
